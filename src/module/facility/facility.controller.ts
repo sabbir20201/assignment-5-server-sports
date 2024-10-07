@@ -1,32 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { facilityServices } from "./facility.service";
 import { catchAsync } from "../../utils/catchAsync";
 
-// const createFacility = async (req: Request, res: Response,next:NextFunction) => {
-//     try {
-//         const facilityData = req.body;
-//         console.log(facilityData);
 
-//         const result = await facilityServices.createFacilityIntoDB(facilityData)
-//         res.status(200).json({
-//             success: true,
-//             statusCode: 200,
-//             message: 'facility is created successfully',
-//             data: result
-//         })
-//     } catch (error:any) {
-//         next(error)
-//         // res.status(500).json({
-//         //     success: false,
-//         //     statusCode: 500,
-//         //     errorMessage: (error as any).message,
-//         //     errorMessage2: 'this is from try ctach',
-//         //     error: error
-//         // })
-//     }
-// }
-
-const createFacility = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+const createFacility:RequestHandler = catchAsync(async (req: Request, res: Response) => {
 
     const facilityData = req.body;
     console.log(facilityData);
@@ -41,7 +18,7 @@ const createFacility = catchAsync(async (req: Request, res: Response, next: Next
 
 })
 
-const getAllFacilities = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+const getAllFacilities:RequestHandler = catchAsync(async (req: Request, res: Response) => {
 
     const result = await facilityServices.getAllFacilitiesFromDB()
     res.status(200).json({
@@ -52,7 +29,21 @@ const getAllFacilities = catchAsync(async (req: Request, res: Response, next: Ne
     })
 
 })
-const updateAFacility = catchAsync(async (req: Request, res: Response) => {
+const findAFacilityById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = req.params.id;
+        const result = await facilityServices.findAFacilityByIdFromDB(id)
+        res.json({
+            success: true,
+            statusCode: 200,
+            message: "a single product got successfully",
+            data: result
+        })
+    } catch (error) {
+        next()
+    }
+}
+const updateAFacility:RequestHandler = catchAsync(async (req, res) => {
 
     const facilityId = req.params.id;
     const updateData = req.body;
@@ -66,7 +57,7 @@ const updateAFacility = catchAsync(async (req: Request, res: Response) => {
     })
 
 })
-const deleteAFacility = catchAsync(async (req: Request, res: Response) => {
+const deleteAFacility:RequestHandler = catchAsync(async (req, res) => {
 
 
     const facilityId = req.params.id;
@@ -83,6 +74,7 @@ const deleteAFacility = catchAsync(async (req: Request, res: Response) => {
 export const facilityController = {
     createFacility,
     getAllFacilities,
+    findAFacilityById,
     updateAFacility,
-    deleteAFacility
+    deleteAFacility,
 }

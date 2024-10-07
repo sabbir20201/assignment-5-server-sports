@@ -4,6 +4,7 @@ import { ZodError, ZodIssue } from "zod";
 import { handleZodError } from "../errors/handleZodError";
 import { handleValidationError } from "../errors/handleValidationError";
 import { handleCastError } from "../errors/handleCastError";
+import { handledDuplicateError } from "../errors/handledDuplicateError";
 
 
 
@@ -19,8 +20,7 @@ export const globalErrorHandler = (err: any, req: Request, res: Response, next: 
             message: 'something went wrong'
         }
     ]
-
-   
+    
     if (err instanceof ZodError) {
         const simplifiedError = handleZodError(err)
         statusCode = simplifiedError.statusCode;
@@ -34,6 +34,11 @@ export const globalErrorHandler = (err: any, req: Request, res: Response, next: 
         
     }else if(err?.name === 'CastError'){
         const simplifiedError = handleCastError(err)
+        statusCode = simplifiedError.statusCode;
+        message = simplifiedError.message;
+        errorSource = simplifiedError.errorSource;
+    }else if(err?.name === 11000){
+        const simplifiedError = handledDuplicateError(err)
         statusCode = simplifiedError.statusCode;
         message = simplifiedError.message;
         errorSource = simplifiedError.errorSource;

@@ -2,6 +2,10 @@ import { model, Schema } from "mongoose";
 import { TFacility } from "./facility.interface";
 
 const facilitySchema = new Schema<TFacility>({
+    image: {
+        type: String,
+        required: false,
+    },
     name: {
         type: String,
         required: [true, 'name is required']
@@ -24,4 +28,4 @@ const facilitySchema = new Schema<TFacility>({
     }
 })
 
-export const FacilityModel = model<TFacility>('facility', facilitySchema) 
+export const Facility = model<TFacility>('Facility', facilitySchema) 

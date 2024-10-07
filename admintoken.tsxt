@@ -1,0 +1,13 @@
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndlYkBwcm9ncmFtbWluZy1oZXJvLWFkbWluLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNzkzMTE0MywiZXhwIjoxNzI3OTY3MTQzfQ.c6b5x6cSVg8xXy_5ke945ugnRKZEJdt03nVoHvfzdd4
+{
+  "email": "web@programming-hero-admin.com",
+  "password": "programming-hero-admin"
+}
+
+
+user 
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndlYkBwcm9ncmFtbWluZy1oZXJvLXVzZXIuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3Mjc5MzE1OTUsImV4cCI6MTcyNzk2NzU5NX0.phxcSggA2dkWIyiRbR7IOw0TEBarKMD6DNuosUhfP-o
+{
+  "email": "web@programming-hero-user.com",
+  "password": "programming-hero-user"
+}
