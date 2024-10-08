@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { TUser } from "../user/user.interface";
 
 
 export type TBooking = {
@@ -6,8 +7,9 @@ export type TBooking = {
     date: string;
     startTime: string;
     endTime: string;
-    user: Types.ObjectId;
+    user: TUser;
     payableAmount: number;
+    transactionId: string
     isBooked: 'confirmed'| 'canceled';
 }
 

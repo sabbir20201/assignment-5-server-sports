@@ -26,7 +26,7 @@ const checkAvailabilityTimeSlots = catchAsync(  async (req: Request, res: Respon
         // find all bookings from booking model 
         const bookings: TBooking[] = await Booking.find({ date: date.format('YYYY-MM-DD') })
 
-        const availableTimeSlots: { startTime: string; endTime: string }[] = [
+ const availableTimeSlots: { startTime: string; endTime: string }[] = [
             { startTime: '08:00', endTime: '10:00' },
             { startTime: '10:00', endTime: '12:00' },
             { startTime: '12:00', endTime: '14:00' },

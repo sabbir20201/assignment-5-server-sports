@@ -1,7 +1,7 @@
 import mongoose, { model, Schema } from "mongoose";
 import { TBooking } from "./booking.interface";
 
- const bookingSchema = new Schema({
+const bookingSchema = new Schema({
     facility: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Facility',
@@ -17,11 +17,15 @@ import { TBooking } from "./booking.interface";
     },
     endTime: {
         type: String,
-        required:true,
+        required: true,
     },
     user: {
-        type: mongoose.Schema.ObjectId,
+        type: Object,
         ref: 'User',
+        required: true
+    },
+    transactionId: {
+        type: String,
         required: true
     },
     payableAmount: {
@@ -32,7 +36,7 @@ import { TBooking } from "./booking.interface";
         type: String,
         enum: ['confirmed', 'canceled'],
     }
-}) 
+})
 
 
 export const Booking = model<TBooking>('Booking', bookingSchema)
