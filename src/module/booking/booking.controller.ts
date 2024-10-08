@@ -96,7 +96,7 @@ const getBookingByUser: RequestHandler = catchAsync(async (req, res) => {
         return
     }
 
-    const findAUserBookings = await Booking.find({ user: userField._id })
+    const findAUserBookings = await Booking.find({ user: userField._id, isBooked: 'confirmed' })
         .populate({
             path: 'facility',
             select: "name description pricePerHour location isDeleted"
@@ -108,13 +108,7 @@ const getBookingByUser: RequestHandler = catchAsync(async (req, res) => {
         message: "Bookings retrieved successfully",
         data: findAUserBookings
     })
-    // } catch (error) {
-    //     res.status(500).json({
-    //         success: false,
-    //         statusCode: 500,
-    //         message: "no booking found",
-    //     })
-    // }
+
 })
 
 

@@ -1,8 +1,6 @@
 import { z } from "zod";
 import { USER_ROLE } from "./user.constant";
 
-
-
 export const userValidationByZod = z.object({
     body: z.object({
         name: z.string(),

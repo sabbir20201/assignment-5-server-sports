@@ -7,9 +7,6 @@ const registerInToDB = async (payload: TUser) => {
     const newUser = await User.create(payload);
     return newUser
 };
-
-
-
 export const userServices = {
     registerInToDB,
 }
