@@ -20,17 +20,29 @@ const bookingSchema = new Schema({
         required: true,
     },
     user: {
-        type: Object,
+        // type: Object,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
     transactionId: {
+
         type: String,
         required: true
     },
     payableAmount: {
         type: Number,
         required: true
+    },
+    status: {
+        type: String,
+        enum: ['Pending','Paid', 'Canceled'],
+        default : 'Pending'
+    },
+    paymentStatus: {
+        type: String,
+        enum: ['Pending','Paid', 'Failed'],
+        default : 'Pending'
     },
     isBooked: {
         type: String,

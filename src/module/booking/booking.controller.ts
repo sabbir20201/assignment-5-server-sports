@@ -1,4 +1,4 @@
-import { Request, RequestHandler, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { Facility } from "../facility/facility.model";
 import { User } from "../user/user.model";
 import { TBooking } from "./booking.interface";
@@ -18,9 +18,24 @@ const availableTimeSlots: TTimeSlot[] = [
     { startTime: '14:00', endTime: '16:00' },
     { startTime: '16:00', endTime: '18:00' }
 ];
-const bookingAFacility: RequestHandler = catchAsync(async (req, res): Promise<any> => {
+// const bookingAFacility: RequestHandler = catchAsync(async (req, res): Promise<any> => {
 
-    // const { _id, date, startTime, endTime } = req.body;
+//     const bookingData = req.body;
+//     const userEmail = (req as any).user?.email;
+//     console.log('bookingData>', bookingData);
+    
+//     const result = await bookingService.bookingInToDB(bookingData, userEmail);
+
+//     res.status(200).json({
+//         success: true,
+//         statusCode: 200,
+//         message: "booking created successfully",
+//         data: result
+//     })
+
+// })
+const bookingAFacility: RequestHandler = async (req, res): Promise<any> => {
+try {
     const bookingData = req.body;
     const userEmail = (req as any).user?.email;
     console.log('bookingData>', bookingData);
@@ -30,86 +45,21 @@ const bookingAFacility: RequestHandler = catchAsync(async (req, res): Promise<an
     res.status(200).json({
         success: true,
         statusCode: 200,
-        message: "booking created successfully",
+        message: "Booking created successfully",
         data: result
     })
-    // const userEmail = (req as any).user?.email;
-    // const userField = await User.findOne({ email: userEmail })
-    // if (!userField) {
-    //     throw new Error("user not found")
+} catch (error: any) {
+    
+    res.status(500).json({
+        success: false,
+        statusCode: 500,
+        message: error?.message || 'internal server error ',
+       error: error
+    })
+}
+ 
 
-    // }
-    // const user = (userField as any)._id.toString()
-    // const isFacilityExists = await Facility.findOne({ _id: _id });
-    // console.log(isFacilityExists);
-
-    // if (!isFacilityExists) {
-    //     return res.status(404).json({
-    //         success: false,
-    //         message: 'Facility not found'
-    //     });
-
-    // }
-
-    // const requestedTimeSlot: TTimeSlot = { startTime, endTime }
-    // const isValidTimeSlot = availableTimeSlots.some(timeSlot =>
-    //     timeSlot.startTime === requestedTimeSlot.startTime && timeSlot.endTime === requestedTimeSlot.endTime
-
-    // );
-    // if (!isValidTimeSlot) {
-    //     return res.status(httpStatus.BAD_REQUEST).json({
-    //         success: false,
-    //         statusCode: httpStatus.BAD_REQUEST,
-    //         message: `invalid time slot requested. Available time slot :${availableTimeSlots.map(slot => `${slot.startTime}-${slot.endTime}`).join(', ')}`
-    //     })
-    // }
-
-    // const facilityId = (isFacilityExists as any)._id.toString();
-    // const pricePerHour = isFacilityExists.pricePerHour;
-
-    // const existingBookings = await Booking.find({
-    //     facility: facilityId,
-    //     date: date,
-    //     $or: [
-    //         { startTime: { $lt: endTime }, endTime: { $gt: startTime } }
-    //     ]
-    // })
-
-    // if (existingBookings.length > 0) {
-    //     return res.status(400).json({
-    //         success: false,
-    //         message: 'selected slot of time is not available for this facility item'
-    //     });
-
-    // }
-
-
-    // // calculation if payable amount 
-    // const start = new Date(`${date}T${startTime}`);
-    // const end = new Date(`${date}T${endTime}`);
-    // const durationHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
-    // const payableAmount = durationHours * pricePerHour
-
-
-    // const data: TBooking = {
-    //     facility: facilityId,
-    //     date,
-    //     startTime,
-    //     endTime,
-    //     user,
-    //     payableAmount,
-    //     isBooked: "confirmed",
-    // }
-
-    // const result = await bookingService.bookingInToDB(data);
-    // res.status(200).json({
-    //     success: true,
-    //     statusCode: 200,
-    //     message: "booking created successfully",
-    //     data: result
-    // })
-
-})
+}
 
 const getAllBookings: RequestHandler = catchAsync(async (req, res) => {
 

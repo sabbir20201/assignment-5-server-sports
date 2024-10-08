@@ -6,7 +6,9 @@ import { UserRoutes } from "./module/user/user.routes"
 import { AuthRoutes } from "./module/auth/auth.routes"
 import { CheckBookingRoutes } from "./module/checkAvailability/checkAvailability.routes"
 import { BookingRoutes } from "./module/booking/booking.routes"
+
 import cors from 'cors'
+import { PaymentRoutes } from "./module/payment/payment.routes"
 
 const app = express()
 app.use(cors())
@@ -19,6 +21,7 @@ app.use("/api/auth", AuthRoutes)
 app.use("/api/auth", UserRoutes)
 app.use("/api/bookings", BookingRoutes)
 app.use("/api/check-availability", CheckBookingRoutes)
+app.use("/api/payment", PaymentRoutes)
 
 
 app.get('/', (req, res) => {

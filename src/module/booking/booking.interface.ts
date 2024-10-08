@@ -7,9 +7,11 @@ export type TBooking = {
     date: string;
     startTime: string;
     endTime: string;
-    user: TUser;
+    user:  Types.ObjectId;
     payableAmount: number;
     transactionId: string
+    status: string;
+    paymentStatus: string;
     isBooked: 'confirmed'| 'canceled';
 }
 
