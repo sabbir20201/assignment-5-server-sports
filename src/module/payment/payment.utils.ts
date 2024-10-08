@@ -2,13 +2,14 @@ import axios from "axios"
 import config from "../../config"
 
 export const initiatePayment = async(paymentData: any)=>{
+try {
     const response = await axios.post(config.payment_url!, {
         store_id: config.store_id,
         signature_key: config.signature_key,
         tran_id: paymentData.transactionId,
         success_url: `http://localhost:5000/api/payment/confirmation?transactionId=${paymentData.transactionId}&status=success`,
-        fail_url: "http://www.merchantdomain.com/failedpage.html",
-        cancel_url: "http://www.merchantdomain.com/cancellpage.html",
+        fail_url: `http://localhost:5000/api/payment/confirmation?status=failed`,
+        cancel_url: "http://localhost:5173/",
         amount: paymentData.payableAmount,
         currency: "BDT",
         desc: "Merchant Registration Payment",
@@ -25,9 +26,14 @@ export const initiatePayment = async(paymentData: any)=>{
     });
     // console.log("response =>",response);
     return response.data
+} catch (error) {
+    throw new Error("payment initiation failed")
+    
+}
     
 }
 export const verifyPayment  = async(tnxId: string)=>{
+  try {
     const response = await axios.get(config.payment_verify_url!, {
         params: {
             store_id: config.store_id,
@@ -37,4 +43,7 @@ export const verifyPayment  = async(tnxId: string)=>{
         }
     })
     return response.data
+  } catch (error) {
+    throw new Error("payment validation failed")
+  }
 }
