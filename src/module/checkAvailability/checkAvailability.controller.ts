@@ -12,6 +12,7 @@ interface TTimeSlot {
 const checkAvailabilityTimeSlots = catchAsync(  async (req: Request, res: Response) => {
     // try {
         const userDate = req.query.date as string || moment().format('YYYY-MM-DD');
+        const facilityId = req.query.facility as string; 
         console.log("userDate =>", userDate);
         const date = moment(userDate, 'YYYY-MM-DD', true)
         if (!date.isValid()) {
@@ -24,7 +25,7 @@ const checkAvailabilityTimeSlots = catchAsync(  async (req: Request, res: Respon
             return
         }
         // find all bookings from booking model 
-        const bookings: TBooking[] = await Booking.find({ date: date.format('YYYY-MM-DD') })
+        const bookings: TBooking[] = await Booking.find({ date: date.format('YYYY-MM-DD'), facility: facilityId })
 
  const availableTimeSlots: { startTime: string; endTime: string }[] = [
             { startTime: '08:00', endTime: '10:00' },
@@ -55,11 +56,12 @@ const checkAvailabilityTimeSlots = catchAsync(  async (req: Request, res: Respon
             const startTime2 = moment(`${date.format('YYYY-MM-DD')}T${timeSlot2.startTime}`);
             const endTime2 = moment(`${date.format('YYYY-MM-DD')}T${timeSlot2.endTime}`);
 
-            const condition1 = startTime1.isBefore(endTime2) && startTime1.isSameOrAfter(startTime2);
-            const condition2 = endTime1.isAfter(startTime2) && endTime1.isSameOrBefore(endTime2);
-            const condition3 = startTime1.isBefore(startTime2) && endTime1.isAfter(endTime2);
+            // const condition1 = startTime1.isBefore(endTime2) && startTime1.isSameOrAfter(startTime2);
+            // const condition2 = endTime1.isAfter(startTime2) && endTime1.isSameOrBefore(endTime2);
+            // const condition3 = startTime1.isBefore(startTime2) && endTime1.isAfter(endTime2);
 
-            return condition1 || condition2 || condition3
+            // return condition1 || condition2 || condition3
+            return startTime1.isBefore(endTime2) && endTime1.isAfter(startTime2)
         }
         console.log('find all bookings date', availableTimeSlots);
     
